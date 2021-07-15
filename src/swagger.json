@@ -1,0 +1,335 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SOLID Introduction API",
+    "description": "Introductory API to SOLID, with user management and Singleton Pattern",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT License",
+      "url": "https://github.com/MrRioja/ignite-introduction-solid/blob/main/LICENSE"
+    },
+    "contact": {
+      "name": "API Support",
+      "url": "https://www.linkedin.com/in/luizrioja/",
+      "email": "lulyrioja@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user",
+        "description": "Inserts a new user into the user array and returns the created user.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Zlatan Ibrahimovic",
+                  "email": "zlatan.god@gmail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "id": "0c411835-0af7-4b76-b692-c97bbc2de36e",
+                    "admin": false,
+                    "name": "Zlatan Ibrahimovic",
+                    "email": "zlatan.god@gmail.com",
+                    "created_at": "2021-07-15T23:22:43.286Z",
+                    "updated_at": "2021-07-15T23:22:43.286Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error creating user. User already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User already exists"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Lists all users",
+        "description": "Lists all users present in the array. This route can only be called by an admin user.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "ID of the administrator user who wants to list users",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in listing users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "date"
+                      },
+                      "updated_at": {
+                        "type": "date"
+                      }
+                    },
+                    "example": {
+                      "id": "dfbcc337-26e4-4801-b34c-2aab5d98235f",
+                      "admin": true,
+                      "name": "Zlatan Ibrahimovic",
+                      "email": "zlatan.god@gmail.com",
+                      "created_at": "2021-07-15T23:10:42.452Z",
+                      "updated_at": "2021-07-15T23:10:59.058Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to list users. Request user is not an administrator.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User is not admin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "List a single user",
+        "description": "Lists a single user present in the array. This route can only be called by an admin user.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User ID who wants to see the profile",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in listing user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "date"
+                    },
+                    "updated_at": {
+                      "type": "date"
+                    }
+                  },
+                  "example": {
+                    "id": "dfbcc337-26e4-4801-b34c-2aab5d98235f",
+                    "admin": true,
+                    "name": "Zlatan Ibrahimovic",
+                    "email": "zlatan.god@gmail.com",
+                    "created_at": "2021-07-15T23:10:42.452Z",
+                    "updated_at": "2021-07-15T23:10:59.058Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed to list user. User does not exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User does not exists"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Grant administrator permissions to a user",
+        "description": "Grant administrator permissions to an existing user in the user array.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User to give admin permissions",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success in making the user an administrator",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "date"
+                    },
+                    "updated_at": {
+                      "type": "date"
+                    }
+                  },
+                  "example": {
+                    "id": "dfbcc337-26e4-4801-b34c-2aab5d98235f",
+                    "admin": true,
+                    "name": "Zlatan Ibrahimovic",
+                    "email": "zlatan.god@gmail.com",
+                    "created_at": "2021-07-15T23:10:42.452Z",
+                    "updated_at": "2021-07-15T23:10:59.058Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed in making the user an administrator. User does not exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "error": "User does not exists"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
