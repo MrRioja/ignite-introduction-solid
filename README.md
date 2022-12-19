@@ -18,11 +18,38 @@
 
 ## Sobre
 
-🚧 Em construção 🚧
+Projeto proposto no desafio complementar do módulo II da trilha do bootcamp de NodeJS da Rocketseat cujo objetivo foi conhecer e colocar em prática alguns dos princípios do SOLID.
 
 ## SOLID Introduction
 
-🚧 Em construção 🚧
+O intuito dessa API é ser uma aplicação de listagem e cadastro de usuários. Para que a listagem de usuários funcione, o usuário que solicita a listagem deve ser um admin (mais detalhes ao longo da descrição).
+O projeto é simples pois o desafio aqui foi praticar a arquitetura da aplicação colocando em pratica os princípios SOLID ensinados durante o módulo.
+
+### Rotas da API
+
+<details>
+  <summary>GET <code>/users</code></summary>
+  <br>
+  A rota recebe, pelo header da requisição, uma propriedade <code>user_id</code> contendo o <code>id</code> do usuário e retornar uma lista com todos os usuários cadastrados. O <code>id</code> é usado para validar se o usuário que está solicitando a listagem é um admin. O retorno da lista deve ser feito apenas se o usuário for admin.
+</details>
+
+<details>
+  <summary>GET <code>/users/:user_id</code></summary>
+  <br>
+  A rota recebe, nos parâmetros da rota, o <code>id</code> de um usuário e devolver as informações do usuário encontrado pelo corpo da resposta.
+</details>
+
+<details>
+  <summary>POST <code>/users</code></summary>
+  <br>
+  A rota recebe <code>name</code> e <code>email</code> dentro do corpo da requisição para que seja possível cadastrar um usuário.
+</details>
+
+<details>
+  <summary>PATCH <code>/users/:user_id/admin</code></summary>
+  <br>
+  A rota deve receber, nos parâmetros da rota, o <code>id</code> de um usuário e transformar esse usuário em admin.  
+</details>
 
 ## Instalação
 
